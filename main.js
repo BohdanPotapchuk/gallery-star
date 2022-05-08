@@ -38,11 +38,48 @@ btn.addEventListener('click', function(){
 });
 
 /* Made sliders */ 
-let currentImg = displayedImage.getAttribute('src');
-
 arrowLeft.addEventListener('click', function(){
- 
+  let currentImg = displayedImage.getAttribute('src');
+  let currentImgIndex = Number(currentImg.charAt(10)); 
+  let nextImgIndex = getIndexOfNextElementLeft(currentImgIndex);
+  //  заменить текущий индекс на следующий индекс , в пути у картинке
+  let newIndexOnStr = String(currentImgIndex).replace(currentImgIndex,nextImgIndex);
+  //  задать src к  новой картинке на новый ()
+   displayedImage.setAttribute('src',`images/pic${newIndexOnStr}.jpg`);
+  //  отображается новая картинка
 });
 arrowRight.addEventListener('click', function(){
-  
+  let currentImg = displayedImage.getAttribute('src');
+  let currentImgIndex = Number(currentImg.charAt(10)); 
+  let nextImgIndex = getIndexOfNextElementRight(currentImgIndex);
+  //  заменить текущий индекс на следующий индекс , в пути у картинке
+  let newIndexOnStr = String(currentImgIndex).replace(currentImgIndex,nextImgIndex);
+  //  задать src к  новой картинке на новый ()
+   displayedImage.setAttribute('src',`images/pic${newIndexOnStr}.jpg`);
+  //  отображается новая картинка
 });
+  //  получить индекс следуещего елемета
+ function getIndexOfNextElementRight(currentImgIndex){
+   if (event.target){
+     if (currentImgIndex === 5) {
+        currentImgIndex = 1;
+     } else {
+      currentImgIndex ++;
+     }
+     var newIndexOnStr = String(currentImgIndex);
+   }
+   return newIndexOnStr;
+ }
+ //  получить индекс следуещего елемета
+ function getIndexOfNextElementLeft(currentImgIndex){
+  if (event.target){
+    if (currentImgIndex === 1) {
+       currentImgIndex = 5;
+    } else {
+     currentImgIndex --;
+    }
+    var newIndexOnStr = String(currentImgIndex);
+  }
+  return newIndexOnStr;
+ }
+ 
