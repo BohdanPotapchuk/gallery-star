@@ -1,25 +1,29 @@
 'use strict'
-let displayedImage = document.querySelector('.displayed-img');
-let thumbBar = document.querySelector('.thumb-bar');
+const displayedImage = document.querySelector('.displayed-img');
+const thumbBar = document.querySelector('.thumb-bar');
 
-let btn = document.querySelector('button');
-let overlay = document.querySelector('.overlay');
+const btn = document.querySelector('button');
+const overlay = document.querySelector('.overlay');
 
-let arrowLeft = document.querySelector('.arrow_left');
-let arrowRight = document.querySelector('.arrow_right');
-
+const arrowLeft = document.querySelector('.arrow_left');
+const arrowRight = document.querySelector('.arrow_right');
 /* Looping through images */
-thumbBar.addEventListener('click', function(){
-  let getTargetSrc = event.target.getAttribute('src');
+
+thumbBar.addEventListener('click', function(event){
+  const getTargetSrc = event.target.getAttribute('src');
+  const getTargetDataIndex = event.target.getAttribute('data-index');
   displayedImage.setAttribute('src',`${getTargetSrc}`);
+  displayedImage.setAttribute('data-index',getTargetDataIndex)
 });
 
 for(let selectedPic = 1 ; selectedPic < 6 ; selectedPic++) {
   createNewPic(selectedPic);
 }
+
 function createNewPic (indexPic) {
-  let newImage = document.createElement('img');
+  const newImage = document.createElement('img');
   newImage.setAttribute('src', `images/pic${indexPic}.jpg`);
+  newImage.setAttribute('data-index', indexPic);
   thumbBar.appendChild(newImage);
 }
 /* Wiring up the Darken/Lighten button */
@@ -36,50 +40,40 @@ btn.addEventListener('click', function(){
     btn.textContent = 'Темнее';
   }
 });
-
 /* Made sliders */ 
+
 arrowLeft.addEventListener('click', function(){
-  let currentImg = displayedImage.getAttribute('src');
-  let currentImgIndex = Number(currentImg.charAt(10)); 
-  let nextImgIndex = getIndexOfNextElementLeft(currentImgIndex);
-  //  заменить текущий индекс на следующий индекс , в пути у картинке
-  let newIndexOnStr = String(currentImgIndex).replace(currentImgIndex,nextImgIndex);
-  //  задать src к  новой картинке на новый ()
-   displayedImage.setAttribute('src',`images/pic${newIndexOnStr}.jpg`);
-  //  отображается новая картинка
+  const currentImgIndex = Number(displayedImage.getAttribute('data-index'));
+  const nextImgIndex = getIndexOfNextElementLeft(currentImgIndex);
+  displayedImage.setAttribute('src',`images/pic${nextImgIndex}.jpg`);
+  displayedImage.setAttribute('data-index', nextImgIndex)
 });
+
 arrowRight.addEventListener('click', function(){
-  let currentImg = displayedImage.getAttribute('src');
-  let currentImgIndex = Number(currentImg.charAt(10)); 
-  let nextImgIndex = getIndexOfNextElementRight(currentImgIndex);
-  //  заменить текущий индекс на следующий индекс , в пути у картинке
-  let newIndexOnStr = String(currentImgIndex).replace(currentImgIndex,nextImgIndex);
-  //  задать src к  новой картинке на новый ()
-   displayedImage.setAttribute('src',`images/pic${newIndexOnStr}.jpg`);
-  //  отображается новая картинка
+  const currentImgIndex = Number(displayedImage.getAttribute('data-index'));
+  const nextImgIndex = getIndexOfNextElementRight(currentImgIndex);
+  displayedImage.setAttribute('src',`images/pic${nextImgIndex}.jpg`);
+  displayedImage.setAttribute('data-index', nextImgIndex)
 });
-  //  получить индекс следуещего елемета
+
  function getIndexOfNextElementRight(currentImgIndex){
-   if (event.target){
      if (currentImgIndex === 5) {
         currentImgIndex = 1;
      } else {
-      currentImgIndex ++;
+      currentImgIndex++;
      }
-     var newIndexOnStr = String(currentImgIndex);
-   }
-   return newIndexOnStr;
+     let newIndexOnStr = currentImgIndex;
+     return newIndexOnStr;
  }
- //  получить индекс следуещего елемета
+
  function getIndexOfNextElementLeft(currentImgIndex){
-  if (event.target){
     if (currentImgIndex === 1) {
        currentImgIndex = 5;
     } else {
-     currentImgIndex --;
+     currentImgIndex--;
     }
-    var newIndexOnStr = String(currentImgIndex);
-  }
-  return newIndexOnStr;
+    let newIndexOnStr = currentImgIndex;
+    return newIndexOnStr;
  }
+ 
  
